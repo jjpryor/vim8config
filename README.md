@@ -1,6 +1,6 @@
 # vim8config is a set of configs for Vim 8+
 
-# Pre-Usage
+# Pre-Usage primer on packaging
 Per vim8 has native package handling, se just git clone and use git submodules.
 See also
 https://jjpryor.com/vim-packages/
@@ -41,11 +41,12 @@ git commit
 Go ahead and git clone this repo to local temp space
 ```
 git clone repo
+cd repo
 ```
 
 then update the modules
 ```
-git submodule update --remote --merge
+git submodule update --init --recursive
 ```
 
 then put the `.vim` and `.vimrc. in place
