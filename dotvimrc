@@ -1,0 +1,130 @@
+" An example for a vimrc file.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2017 Sep 20
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"	      for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"	    for OpenVMS:  sys$login:.vimrc
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" Get the defaults that most users want.
+source $VIMRUNTIME/defaults.vim
+
+if has("vms")
+  set nobackup		" do not keep a backup file, use versions instead
+else
+  set backup		" keep a backup file (restore to previous version)
+  if has('persistent_undo')
+    set undofile	" keep an undo file (undo changes after closing)
+  endif
+endif
+
+if &t_Co > 2 || has("gui_running")
+  " Switch on highlighting the last used search pattern.
+  set hlsearch
+endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+" Add optional packages.
+"
+" The matchit plugin makes the % command work better, but it is not backwards
+" compatible.
+" The ! means the package won't be loaded right away but when plugins are
+" loaded during initialization.
+if has('syntax') && has('eval')
+  packadd! matchit
+endif
+
+" Don't wake up system with blinking cursor:
+" http://www.linuxpowertop.org/known.php
+let &guicursor = &guicursor . ",a:blinkon0"
+
+" color column is only available on vim v7.3+
+if version >= 703
+ if exists('+colorcolumn')
+  set colorcolumn=80
+  endif
+endif
+
+" enhanced <TAB> completion within Vim
+set wildmenu
+
+" always show status line
+set laststatus=2
+
+" hides the normal vim mode line. ex:   -- INSERT --
+set noshowmode
+" If you want to switch themes live, then enter command mode ' : '
+" :AirlineTheme <TAB>
+" should bring up a list of theme names
+let g:airline_theme='kolor'
+" other nice theme
+"let g:airline_theme='lunar'
+
+"Turn on the whole plugin.                                            *'g:pymode'*
+let g:pymode = 1
+
+"Turn off plugin's warnings.                                 *'g:pymode_warnings'*
+"let g:pymode_warnings = 1
+
+"Add paths to `sys.path`                                          *'g:pymode_paths'*
+let g:pymode_paths = []
+
+"Trim unused white spaces on save.                   *'g:pymode_trim_whitespaces'*
+let g:pymode_trim_whitespaces = 1
+
+"Setup default python options.                                *'g:pymode_options'*
+let g:pymode_options = 1
+
+"Setup max line length                        *'g:pymode_options_max_line_length'*
+"let g:pymode_options_max_line_length = 119
+
+"Enable colorcolumn display at max_line_length.   *'g:pymode_options_colorcolumn'*
+"let g:pymode_options_colorcolumn = 1
+
+"Setup pymode |quickfix| window.
+"             *'g:pymode_quickfix_maxheight'*  *'g:pymode_quickfix_minheight'*
+let g:pymode_quickfix_minheight = 3
+let g:pymode_quickfix_maxheight = 6
+
+"Enable automatic virtualenv detection                     *'g:pymode_virtualenv'*
+let g:pymode_virtualenv = 1
+
+"Set path to virtualenv manually                      *'g:pymode_virtualenv_path'*
+"let g:pymode_virtualenv_path = $VIRTUAL_ENV
+"let g:ale_linters = { 'python': ['flake8'], }
+let g:ale_linters = {
+\   'python': ['flake8', 'isort', 'pycodestyle'],
+\   'puppet': ['puppet', 'puppet-lint'],
+\}
+
+packloadall
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
+
+
