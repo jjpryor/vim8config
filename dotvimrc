@@ -120,7 +120,24 @@ let g:pymode_virtualenv = 1
 let g:ale_linters = {
 \   'python': ['flake8', 'isort', 'pycodestyle'],
 \   'puppet': ['puppet', 'puppet-lint'],
+\   'ansible': ['ansible-lint'],
 \}
+
+
+"How can I change the format for echo messages?
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+
+"ensures that the autocomplete window goes away when you’re done with it
+let g:ycm_autoclose_preview_window_after_completion=1
+"defines a shortcut for goto definition.
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+
+let g:python_highlight_all=1
 
 packloadall
 " Load all of the helptags now, after plugins have been loaded.
